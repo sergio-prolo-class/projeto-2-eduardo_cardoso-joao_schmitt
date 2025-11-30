@@ -7,12 +7,13 @@ import ifsc.joe.domain.Personagem;
 public class Cavaleiro extends Personagem implements Guerreiro, ComMontaria {
 
     public Cavaleiro(int x, int y) {
-        super(x, y, "cavaleiro");
+        super(x, y, "cavaleiro", 50, 3);
     }
 
     @Override
     public void atacar() {
         this.atacando = !this.atacando;
+        this.icone = this.carregarImagem(this.nomeImagemBase + (atacando ? "2" : ""));
         System.out.println("Cavaleiro atacando!");
     }
 
