@@ -41,11 +41,19 @@ public class PainelControles {
         configurarBotaoAtaque();
     }
 
+    private Class<?> getTipoSelecionado() {
+        if (aldeaoRadioButton.isSelected()) return Aldeao.class;
+        if (arqueiroRadioButton.isSelected()) return Arqueiro.class;
+        if (cavaleiroRadioButton.isSelected()) return Cavaleiro.class;
+        return null; // "Todos"
+    }
+
     private void configurarBotoesMovimento() {
-        buttonCima.addActionListener(e -> getTela().movimentarPersonagens(Direcao.CIMA));
-        buttonBaixo.addActionListener(e -> getTela().movimentarPersonagens(Direcao.BAIXO));
-        buttonEsquerda.addActionListener(e -> getTela().movimentarPersonagens(Direcao.ESQUERDA));
-        buttonDireita.addActionListener(e -> getTela().movimentarPersonagens(Direcao.DIREITA));
+        // Agora passamos o resultado de getTipoSelecionado() para a tela
+        buttonCima.addActionListener(e -> getTela().movimentarPersonagens(Direcao.CIMA, getTipoSelecionado()));
+        buttonBaixo.addActionListener(e -> getTela().movimentarPersonagens(Direcao.BAIXO, getTipoSelecionado()));
+        buttonEsquerda.addActionListener(e -> getTela().movimentarPersonagens(Direcao.ESQUERDA, getTipoSelecionado()));
+        buttonDireita.addActionListener(e -> getTela().movimentarPersonagens(Direcao.DIREITA, getTipoSelecionado()));
     }
 
     private void configurarBotoesCriacao() {
@@ -66,7 +74,7 @@ public class PainelControles {
     }
 
     private void configurarBotaoAtaque() {
-        atacarButton.addActionListener(e -> getTela().atacarComGuerreiros());
+        atacarButton.addActionListener(e -> getTela().atacarComGuerreiros(getTipoSelecionado()));
     }
 
     private int[] sortearPosicao() {

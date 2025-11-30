@@ -25,27 +25,35 @@ public class Tela extends JPanel {
         g.dispose();
     }
 
-    /**
-     * Adiciona qualquer tipo de personagem à tela
-     */
     public void adicionarPersonagem(Personagem p) {
         p.desenhar(super.getGraphics(), this);
         this.personagens.add(p);
     }
 
-    public void movimentarPersonagens(Direcao direcao) {
-        // Mover() funciona para todos
-        this.personagens.forEach(p -> p.mover(direcao, this.getWidth(), this.getHeight()));
+    /**
+     * Movimenta os personagens, aplicando o filtro de tipo selecionado.
+     * @param direcao Direção do movimento.
+     * @param tipoFiltro Classe do tipo a ser movido (ex: Aldeao.class) ou null para todos.
+     */
+    public void movimentarPersonagens(Direcao direcao, Class<?> tipoFiltro) {
+        this.personagens.stream()
+                // Se tipoFiltro for null (Todos), passa tudo. Senão, verifica se o personagem é do tipo.
+                .filter(p -> tipoFiltro == null || tipoFiltro.isInstance(p))
+                .forEach(p -> p.mover(direcao, this.getWidth(), this.getHeight()));
+
         this.repaint();
     }
 
-    public void atacarComGuerreiros() {
-        for (Personagem p : this.personagens) {
-            // Verifica se o personagem implementa a interface Guerreiro (instanceof)
-            if (p instanceof Guerreiro) {
-                ((Guerreiro) p).atacar();
-            }
-        }
+    /**
+     * Ordena ataque para os Guerreiros, respeitando o filtro de tipo.
+     * @param tipoFiltro Classe do tipo a atacar ou null para todos.
+     */
+    public void atacarComGuerreiros(Class<?> tipoFiltro) {
+        this.personagens.stream()
+                .filter(p -> p instanceof Guerreiro) // Apenas guerreiros podem atacar
+                .filter(p -> tipoFiltro == null || tipoFiltro.isInstance(p)) // Aplica o filtro da interface
+                .forEach(p -> ((Guerreiro) p).atacar());
+
         this.repaint();
     }
 }
