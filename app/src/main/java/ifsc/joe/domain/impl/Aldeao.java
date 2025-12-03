@@ -1,19 +1,12 @@
 package ifsc.joe.domain.impl;
 
 import ifsc.joe.domain.Coletador;
-import ifsc.joe.domain.Guerreiro;
 import ifsc.joe.domain.Personagem;
 
-public class Aldeao extends Personagem implements Guerreiro, Coletador {
+public class Aldeao extends Personagem implements Coletador {
 
     public Aldeao(int x, int y) {
         super(x, y, "aldeao", 25, 1);
-    }
-
-    @Override
-    public void atacar() {
-        this.atacando = !this.atacando;
-        this.icone = this.carregarImagem(this.nomeImagemBase + (atacando ? "2" : ""));
     }
 
     @Override

@@ -16,6 +16,9 @@ public abstract class Personagem {
     protected int vida;
     protected int ataque;
     protected double velocidade;
+    
+    // Controle de animação de morte
+    protected float opacidade = 1.0f;
 
     public Personagem(int x, int y, String nomeImagemBase, int vida, int ataque) {
         this.posX = x;
@@ -28,9 +31,25 @@ public abstract class Personagem {
     }
 
     public void desenhar(Graphics g, JPanel painel) {
-        if (this.vida > 0) { // Só desenha se estiver vivo
+        if (this.vida <= 0) {
+            // Lógica de "Fade Out" (Desaparecimento)
+            opacidade -= 0.05f; // Velocidade do desaparecimento
+            if (opacidade < 0) opacidade = 0;
+
+            Graphics2D g2d = (Graphics2D) g;
+            // Configura transparência
+            g2d.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER, opacidade));
+            g.drawImage(this.icone, this.posX, this.posY, painel);
+            // Restaura transparência para os próximos desenhos
+            g2d.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER, 1.0f));
+        } else {
+            // Desenho normal
             g.drawImage(this.icone, this.posX, this.posY, painel);
         }
+    }
+
+    public boolean estaMortoCompletamente() {
+        return this.vida <= 0 && this.opacidade <= 0;
     }
 
     public void mover(Direcao direcao, int maxLargura, int maxAltura) {
@@ -49,14 +68,18 @@ public abstract class Personagem {
         }
     }
 
-    // Metodo para receber dano
     public void sofrerDano(int dano) {
+        if (this.vida <= 0) return; // Já está morto
+
         this.vida -= dano;
-        if (this.vida < 0) this.vida = 0;
-        System.out.println(this.getClass().getSimpleName() + " sofreu " + dano + " de dano. Vida restante: " + this.vida);
+        if (this.vida <= 0) {
+            this.vida = 0;
+            System.out.println(this.getClass().getSimpleName() + " morreu! Iniciando efeito visual.");
+        } else {
+            System.out.println(this.getClass().getSimpleName() + " sofreu " + dano + " de dano. Vida restante: " + this.vida);
+        }
     }
 
-    // Metodo auxiliar para calcular distância
     public double distanciaPara(Personagem outro) {
         return Math.sqrt(Math.pow(this.posX - outro.posX, 2) + Math.pow(this.posY - outro.posY, 2));
     }
@@ -70,8 +93,13 @@ public abstract class Personagem {
     }
 
     protected Image carregarImagem(String imagem) {
-        return new ImageIcon(Objects.requireNonNull(
-                getClass().getClassLoader().getResource("./" + imagem + ".png")
-        )).getImage();
+        try {
+            return new ImageIcon(Objects.requireNonNull(
+                    getClass().getClassLoader().getResource("./" + imagem + ".png")
+            )).getImage();
+        } catch (NullPointerException e) {
+            System.err.println("Imagem não encontrada: " + imagem);
+            return null;
+        }
     }
 }
