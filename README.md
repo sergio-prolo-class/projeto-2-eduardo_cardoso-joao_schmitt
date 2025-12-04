@@ -41,6 +41,12 @@ Abaixo estão listados os requisitos da Árvore de Habilidades que já foram con
   - **Feedback Visual:** Troca de *sprites* (imagens) durante a ação de ataque para todas as classes.
   - **Dano em Área:** Unidades atacam inimigos dentro de um raio de proximidade.
 
+- [x] **Sistema de Morte (3 pontos):**
+    - Monitoramento de vida: Personagens com vida igual ou menor que zero são detectados automaticamente.
+    - Gestão de Memória: Remoção segura do objeto da coleção de personagens e da tela.
+    - **Feedback:** Mensagem de "Baixa confirmada" exibida no terminal.
+    - Integração visual com a Barra de Vida (vida zerada resulta em eliminação imediata).
+
 ---
 
 ## 🚀 Como Executar o programa
