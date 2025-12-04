@@ -3,11 +3,12 @@ package ifsc.joe.domain.impl;
 import ifsc.joe.domain.ComMontaria;
 import ifsc.joe.domain.Guerreiro;
 import ifsc.joe.domain.Personagem;
+import ifsc.joe.utils.Config;
 
 public class Cavaleiro extends Personagem implements Guerreiro, ComMontaria {
 
     public Cavaleiro(int x, int y) {
-        super(x, y, "cavaleiro", 50, 3, 75);
+        super(x, y, "cavaleiro", Config.CAVALEIRO_VIDA, Config.CAVALEIRO_ATAQUE, Config.CAVALEIRO_ALCANCE);
     }
 
     @Override

@@ -53,6 +53,12 @@ Abaixo estão listados os requisitos da Árvore de Habilidades que já foram con
     - Validação de alcance antes de aplicar dano.
     - **Indicador Visual:** Círculo pontilhado exibido ao ativar o modo de ataque.
 
+### 🏛️ Arquitetura de Software
+- [x] **Arquivo de Configurações (3 pontos):**
+    - Centralização de constantes (vida, ataque, alcance, UI) na classe `Config`.
+    - Remoção de "números mágicos" do código das classes de domínio.
+    - Facilitação do balanceamento do jogo em um único local.
+
 ---
 
 ## 🚀 Como Executar o programa

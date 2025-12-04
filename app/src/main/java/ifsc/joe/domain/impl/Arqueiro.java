@@ -2,11 +2,12 @@ package ifsc.joe.domain.impl;
 
 import ifsc.joe.domain.Guerreiro;
 import ifsc.joe.domain.Personagem;
+import ifsc.joe.utils.Config;
 
 public class Arqueiro extends Personagem implements Guerreiro {
 
     public Arqueiro(int x, int y) {
-        super(x, y, "arqueiro", 35, 2, 150);
+        super(x, y, "arqueiro", Config.ARQUEIRO_VIDA, Config.ARQUEIRO_ATAQUE, Config.ARQUEIRO_ALCANCE);
     }
 
     @Override

@@ -1,6 +1,7 @@
 package ifsc.joe.domain;
 
 import ifsc.joe.enums.Direcao;
+import ifsc.joe.utils.Config; // Importando as configurações
 
 import javax.swing.*;
 import java.awt.*;
@@ -55,8 +56,9 @@ public abstract class Personagem {
 
     private void desenharBarraVida(Graphics g) {
         int larguraBarra = this.icone.getWidth(null);
-        int alturaBarra = 5;
-        int yBarra = this.posY - 10;
+        // Uso das constantes visuais
+        int alturaBarra = Config.BARRA_VIDA_ALTURA;
+        int yBarra = this.posY - Config.BARRA_VIDA_OFFSET;
 
         g.setColor(Color.RED);
         g.fillRect(this.posX, yBarra, larguraBarra, alturaBarra);
@@ -74,11 +76,14 @@ public abstract class Personagem {
     public void mover(Direcao direcao, int maxLargura, int maxAltura) {
         if (this.vida <= 0) return;
 
+        // Uso da constante de velocidade
+        int passo = Config.VELOCIDADE_PADRAO;
+
         switch (direcao) {
-            case CIMA     -> this.posY -= 10;
-            case BAIXO    -> this.posY += 10;
-            case ESQUERDA -> this.posX -= 10;
-            case DIREITA  -> this.posX += 10;
+            case CIMA     -> this.posY -= passo;
+            case BAIXO    -> this.posY += passo;
+            case ESQUERDA -> this.posX -= passo;
+            case DIREITA  -> this.posX += passo;
         }
 
         if (this.icone != null) {

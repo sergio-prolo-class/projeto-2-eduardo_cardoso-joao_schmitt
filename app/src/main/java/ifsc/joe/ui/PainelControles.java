@@ -4,6 +4,7 @@ import ifsc.joe.domain.impl.Aldeao;
 import ifsc.joe.domain.impl.Arqueiro;
 import ifsc.joe.domain.impl.Cavaleiro;
 import ifsc.joe.enums.Direcao;
+import ifsc.joe.utils.Config;
 
 import javax.swing.*;
 import java.util.Random;
@@ -49,7 +50,6 @@ public class PainelControles {
     }
 
     private void configurarBotoesMovimento() {
-        // Agora passamos o resultado de getTipoSelecionado() para a tela
         buttonCima.addActionListener(e -> getTela().movimentarPersonagens(Direcao.CIMA, getTipoSelecionado()));
         buttonBaixo.addActionListener(e -> getTela().movimentarPersonagens(Direcao.BAIXO, getTipoSelecionado()));
         buttonEsquerda.addActionListener(e -> getTela().movimentarPersonagens(Direcao.ESQUERDA, getTipoSelecionado()));
@@ -78,9 +78,8 @@ public class PainelControles {
     }
 
     private int[] sortearPosicao() {
-        final int PADDING = 50;
-        int posX = sorteio.nextInt(Math.max(1, painelTela.getWidth() - PADDING));
-        int posY = sorteio.nextInt(Math.max(1, painelTela.getHeight() - PADDING));
+        int posX = sorteio.nextInt(Math.max(1, painelTela.getWidth() - Config.PADDING_BORDAS));
+        int posY = sorteio.nextInt(Math.max(1, painelTela.getHeight() - Config.PADDING_BORDAS));
         return new int[]{posX, posY};
     }
 
