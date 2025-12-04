@@ -24,7 +24,7 @@ Requisitos" disponibilizada pelo professor, permitindo escolhas de design e impl
 
 ---
 
-## ✅ Funcionalidades Implementadas (Pontuação atingida até o momento: 14/32)
+## ✅ Funcionalidades Implementadas (Pontuação atingida até o momento: 21/32)
 
 Abaixo estão listados os requisitos da Árvore de Habilidades que já foram concluídos no projeto:
 
