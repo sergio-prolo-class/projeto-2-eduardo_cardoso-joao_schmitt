@@ -13,30 +13,38 @@ import java.util.stream.Collectors;
 public class Tela extends JPanel {
 
     private final Set<Personagem> personagens;
+    private final Timer gameLoop;
 
     public Tela() {
         this.setBackground(Color.white);
         this.personagens = new HashSet<>();
+
+        this.gameLoop = new Timer(16, e -> {
+            repaint();
+        });
+        this.gameLoop.start();
     }
 
     @Override
     public void paint(Graphics g) {
         super.paint(g);
 
+        // Remove da lista apenas se estiver morto E totalmente transparente
         personagens.removeIf(p -> {
-            if (p.getVida() <= 0) {
-                System.out.println("☠️ Baixa confirmada: " + p.getClass().getSimpleName() + " eliminado.");
+            if (p.isRemovivel()) {
+                System.out.println("Baixa confirmada: " + p.getClass().getSimpleName() + " eliminado.");
                 return true;
             }
             return false;
         });
 
+        // Desenha todos os personagens (os mortos desenham-se com transparência até sumirem)
         this.personagens.forEach(p -> p.desenhar(g, this));
+
         g.dispose();
     }
 
     public void adicionarPersonagem(Personagem p) {
-        p.desenhar(super.getGraphics(), this);
         this.personagens.add(p);
     }
 
@@ -44,8 +52,6 @@ public class Tela extends JPanel {
         this.personagens.stream()
                 .filter(p -> tipoFiltro == null || tipoFiltro.isInstance(p))
                 .forEach(p -> p.mover(direcao, this.getWidth(), this.getHeight()));
-
-        this.repaint();
     }
 
     public void atacarComGuerreiros(Class<?> tipoFiltro) {
@@ -58,12 +64,11 @@ public class Tela extends JPanel {
             ((Guerreiro) atacante).atacar();
 
             for (Personagem alvo : this.personagens) {
-                // Usa o alcance do atacante
+                // Não ataca a si mesmo e respeita o alcance
                 if (atacante != alvo && atacante.distanciaPara(alvo) <= atacante.getAlcance()) {
                     alvo.sofrerDano(atacante.getAtaque());
                 }
             }
         }
-        this.repaint();
     }
 }

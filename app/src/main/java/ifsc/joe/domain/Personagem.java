@@ -1,7 +1,7 @@
 package ifsc.joe.domain;
 
 import ifsc.joe.enums.Direcao;
-import ifsc.joe.utils.Config; // Importando as configurações
+import ifsc.joe.utils.Config;
 
 import javax.swing.*;
 import java.awt.*;
@@ -19,6 +19,9 @@ public abstract class Personagem {
     protected int alcance;
     protected double velocidade;
 
+    protected float opacidade = 1.0f;
+    protected float taxaFade = Config.TAXA_FADE_OUT;
+
     public Personagem(int x, int y, String nomeImagemBase, int vida, int ataque, int alcance) {
         this.posX = x;
         this.posY = y;
@@ -32,14 +35,30 @@ public abstract class Personagem {
     }
 
     public void desenhar(Graphics g, JPanel painel) {
-        if (this.vida <= 0) return;
+        if (opacidade <= 0) return;
+
+        Graphics2D g2d = (Graphics2D) g;
+        Composite compositeOriginal = g2d.getComposite();
+
+        // Lógica de Morte
+        if (this.vida <= 0) {
+            opacidade -= taxaFade;
+            if (opacidade < 0) opacidade = 0;
+
+            g2d.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER, opacidade));
+        }
 
         g.drawImage(this.icone, this.posX, this.posY, painel);
-        desenharBarraVida(g);
 
-        if (this.atacando) {
+        if (opacidade > 0.8f) {
+            desenharBarraVida(g);
+        }
+
+        if (this.atacando && this.vida > 0) {
             desenharAlcance(g);
         }
+
+        g2d.setComposite(compositeOriginal);
     }
 
     private void desenharAlcance(Graphics g) {
@@ -56,17 +75,25 @@ public abstract class Personagem {
 
     private void desenharBarraVida(Graphics g) {
         int larguraBarra = this.icone.getWidth(null);
-        // Uso das constantes visuais
         int alturaBarra = Config.BARRA_VIDA_ALTURA;
         int yBarra = this.posY - Config.BARRA_VIDA_OFFSET;
 
-        g.setColor(Color.RED);
+        g.setColor(Color.BLACK);
         g.fillRect(this.posX, yBarra, larguraBarra, alturaBarra);
 
         if (this.vida > 0) {
-            int larguraVerde = (int) ((double) this.vida / this.vidaMaxima * larguraBarra);
-            g.setColor(Color.GREEN);
-            g.fillRect(this.posX, yBarra, larguraVerde, alturaBarra);
+            double porcentagem = (double) this.vida / this.vidaMaxima;
+            int larguraVida = (int) (porcentagem * larguraBarra);
+
+            if (porcentagem > 0.75) {
+                g.setColor(Color.GREEN);
+            } else if (porcentagem > 0.25) {
+                g.setColor(Color.YELLOW);
+            } else {
+                g.setColor(Color.RED);
+            }
+
+            g.fillRect(this.posX, yBarra, larguraVida, alturaBarra);
         }
 
         g.setColor(Color.BLACK);
@@ -76,7 +103,6 @@ public abstract class Personagem {
     public void mover(Direcao direcao, int maxLargura, int maxAltura) {
         if (this.vida <= 0) return;
 
-        // Uso da constante de velocidade
         int passo = Config.VELOCIDADE_PADRAO;
 
         switch (direcao) {
@@ -101,6 +127,10 @@ public abstract class Personagem {
         System.out.println(this.getClass().getSimpleName() + " sofreu " + dano + " de dano. Vida: " + this.vida + "/" + this.vidaMaxima);
     }
 
+    public boolean isRemovivel() {
+        return this.vida <= 0 && this.opacidade <= 0;
+    }
+
     public double distanciaPara(Personagem outro) {
         int centroX = this.posX + (this.icone.getWidth(null) / 2);
         int centroY = this.posY + (this.icone.getHeight(null) / 2);
@@ -110,17 +140,9 @@ public abstract class Personagem {
         return Math.sqrt(Math.pow(centroX - outroCentroX, 2) + Math.pow(centroY - outroCentroY, 2));
     }
 
-    public int getAtaque() {
-        return ataque;
-    }
-
-    public int getAlcance() {
-        return alcance;
-    }
-
-    public int getVida() {
-        return vida;
-    }
+    public int getAtaque() { return ataque; }
+    public int getAlcance() { return alcance; }
+    public int getVida() { return vida; }
 
     protected Image carregarImagem(String imagem) {
         try {
