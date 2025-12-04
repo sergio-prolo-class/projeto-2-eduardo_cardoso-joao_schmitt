@@ -13,7 +13,6 @@ import java.util.stream.Collectors;
 public class Tela extends JPanel {
 
     private final Set<Personagem> personagens;
-    private static final double ALCANCE_ATAQUE = 50.0;
 
     public Tela() {
         this.setBackground(Color.white);
@@ -24,10 +23,9 @@ public class Tela extends JPanel {
     public void paint(Graphics g) {
         super.paint(g);
 
-        // Remove mortos e imprime mensagem no terminal
         personagens.removeIf(p -> {
             if (p.getVida() <= 0) {
-                System.out.println("Baixa confirmada: " + p.getClass().getSimpleName() + " eliminado.");
+                System.out.println("☠️ Baixa confirmada: " + p.getClass().getSimpleName() + " eliminado.");
                 return true;
             }
             return false;
@@ -60,7 +58,8 @@ public class Tela extends JPanel {
             ((Guerreiro) atacante).atacar();
 
             for (Personagem alvo : this.personagens) {
-                if (atacante != alvo && atacante.distanciaPara(alvo) <= ALCANCE_ATAQUE) {
+                // Usa o alcance do atacante
+                if (atacante != alvo && atacante.distanciaPara(alvo) <= atacante.getAlcance()) {
                     alvo.sofrerDano(atacante.getAtaque());
                 }
             }

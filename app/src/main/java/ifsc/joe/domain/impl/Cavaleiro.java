@@ -7,7 +7,7 @@ import ifsc.joe.domain.Personagem;
 public class Cavaleiro extends Personagem implements Guerreiro, ComMontaria {
 
     public Cavaleiro(int x, int y) {
-        super(x, y, "cavaleiro", 50, 3);
+        super(x, y, "cavaleiro", 50, 3, 75);
     }
 
     @Override

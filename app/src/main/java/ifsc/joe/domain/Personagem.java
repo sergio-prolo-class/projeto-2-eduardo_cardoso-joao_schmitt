@@ -15,15 +15,17 @@ public abstract class Personagem {
     protected int vida;
     protected int vidaMaxima;
     protected int ataque;
+    protected int alcance;
     protected double velocidade;
 
-    public Personagem(int x, int y, String nomeImagemBase, int vida, int ataque) {
+    public Personagem(int x, int y, String nomeImagemBase, int vida, int ataque, int alcance) {
         this.posX = x;
         this.posY = y;
         this.nomeImagemBase = nomeImagemBase;
         this.vida = vida;
         this.vidaMaxima = vida;
         this.ataque = ataque;
+        this.alcance = alcance;
         this.atacando = false;
         this.icone = carregarImagem(nomeImagemBase);
     }
@@ -33,6 +35,22 @@ public abstract class Personagem {
 
         g.drawImage(this.icone, this.posX, this.posY, painel);
         desenharBarraVida(g);
+
+        if (this.atacando) {
+            desenharAlcance(g);
+        }
+    }
+
+    private void desenharAlcance(Graphics g) {
+        Graphics2D g2d = (Graphics2D) g;
+        g2d.setColor(Color.BLACK);
+        g2d.setStroke(new BasicStroke(1));
+
+        int raio = this.alcance;
+        int centroX = this.posX + (this.icone.getWidth(null) / 2);
+        int centroY = this.posY + (this.icone.getHeight(null) / 2);
+
+        g2d.drawOval(centroX - raio, centroY - raio, raio * 2, raio * 2);
     }
 
     private void desenharBarraVida(Graphics g) {
@@ -40,18 +58,15 @@ public abstract class Personagem {
         int alturaBarra = 5;
         int yBarra = this.posY - 10;
 
-        // Fundo da barra (Vermelho - Vida perdida)
         g.setColor(Color.RED);
         g.fillRect(this.posX, yBarra, larguraBarra, alturaBarra);
 
-        // Frente da barra (Verde - Vida atual)
         if (this.vida > 0) {
             int larguraVerde = (int) ((double) this.vida / this.vidaMaxima * larguraBarra);
             g.setColor(Color.GREEN);
             g.fillRect(this.posX, yBarra, larguraVerde, alturaBarra);
         }
 
-        // Borda preta para melhor visualização
         g.setColor(Color.BLACK);
         g.drawRect(this.posX, yBarra, larguraBarra, alturaBarra);
     }
@@ -82,11 +97,20 @@ public abstract class Personagem {
     }
 
     public double distanciaPara(Personagem outro) {
-        return Math.sqrt(Math.pow(this.posX - outro.posX, 2) + Math.pow(this.posY - outro.posY, 2));
+        int centroX = this.posX + (this.icone.getWidth(null) / 2);
+        int centroY = this.posY + (this.icone.getHeight(null) / 2);
+        int outroCentroX = outro.posX + (outro.icone.getWidth(null) / 2);
+        int outroCentroY = outro.posY + (outro.icone.getHeight(null) / 2);
+
+        return Math.sqrt(Math.pow(centroX - outroCentroX, 2) + Math.pow(centroY - outroCentroY, 2));
     }
 
     public int getAtaque() {
         return ataque;
+    }
+
+    public int getAlcance() {
+        return alcance;
     }
 
     public int getVida() {

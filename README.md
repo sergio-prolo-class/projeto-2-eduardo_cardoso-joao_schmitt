@@ -19,7 +19,7 @@ O desenvolvimento segue uma **Metodologia Gamificada**, onde funcionalidades sã
 
 ---
 
-## ✅ Funcionalidades Implementadas
+## ✅ Funcionalidades Implementadas (Pontuação atingida até o momento: 14/32)
 
 Abaixo estão listados os requisitos da Árvore de Habilidades que já foram concluídos no projeto:
 
@@ -46,6 +46,12 @@ Abaixo estão listados os requisitos da Árvore de Habilidades que já foram con
     - Gestão de Memória: Remoção segura do objeto da coleção de personagens e da tela.
     - **Feedback:** Mensagem de "Baixa confirmada" exibida no terminal.
     - Integração visual com a Barra de Vida (vida zerada resulta em eliminação imediata).
+
+- [x] **Alcance Variável (4 pontos):**
+    - Definição de raios de ataque distintos por classe (Aldeão: 50px, Cavaleiro: 75px, Arqueiro: 150px).
+    - Cálculo de distância preciso entre personagens.
+    - Validação de alcance antes de aplicar dano.
+    - **Indicador Visual:** Círculo pontilhado exibido ao ativar o modo de ataque.
 
 ---
 

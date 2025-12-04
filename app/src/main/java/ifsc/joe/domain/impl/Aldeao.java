@@ -6,7 +6,7 @@ import ifsc.joe.domain.Personagem;
 public class Aldeao extends Personagem implements Coletador {
 
     public Aldeao(int x, int y) {
-        super(x, y, "aldeao", 25, 1);
+        super(x, y, "aldeao", 25, 1, 50);
     }
 
     @Override

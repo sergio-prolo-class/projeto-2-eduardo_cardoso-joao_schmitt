@@ -6,7 +6,7 @@ import ifsc.joe.domain.Personagem;
 public class Arqueiro extends Personagem implements Guerreiro {
 
     public Arqueiro(int x, int y) {
-        super(x, y, "arqueiro", 35, 2);
+        super(x, y, "arqueiro", 35, 2, 150);
     }
 
     @Override
