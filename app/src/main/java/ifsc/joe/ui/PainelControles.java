@@ -30,6 +30,10 @@ public class PainelControles {
     private JButton buttonBaixo;
     private JButton buttonDireita;
     private JLabel logo;
+    private JPanel Contador;
+    private JLabel contagem_aldeao;
+    private JLabel contagem_arqueiro;
+    private JLabel contagem_cavaleiro;
 
     public PainelControles() {
         this.sorteio = new Random();
