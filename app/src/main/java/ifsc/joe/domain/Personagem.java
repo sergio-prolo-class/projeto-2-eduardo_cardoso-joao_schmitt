@@ -22,6 +22,8 @@ public abstract class Personagem {
     protected float opacidade = 1.0f;
     protected float taxaFade = Config.TAXA_FADE_OUT;
 
+    abstract public void aumentar_baixas();
+
     public Personagem(int x, int y, String nomeImagemBase, int vida, int ataque, int alcance) {
         this.posX = x;
         this.posY = y;

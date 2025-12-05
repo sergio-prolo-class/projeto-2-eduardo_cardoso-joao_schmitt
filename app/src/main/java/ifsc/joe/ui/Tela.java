@@ -33,6 +33,7 @@ public class Tela extends JPanel {
         personagens.removeIf(p -> {
             if (p.isRemovivel()) {
                 System.out.println("Baixa confirmada: " + p.getClass().getSimpleName() + " eliminado.");
+                p.aumentar_baixas();
                 return true;
             }
             return false;
