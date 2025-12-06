@@ -7,6 +7,10 @@ import ifsc.joe.utils.Config;
 public class Arqueiro extends Personagem implements Guerreiro {
     private static int contagem_baixas;
 
+    public static int getContagemBaixas() {
+        return contagem_baixas;
+    }
+
     public Arqueiro(int x, int y) {
         super(x, y, "arqueiro", Config.ARQUEIRO_VIDA, Config.ARQUEIRO_ATAQUE, Config.ARQUEIRO_ALCANCE);
     }

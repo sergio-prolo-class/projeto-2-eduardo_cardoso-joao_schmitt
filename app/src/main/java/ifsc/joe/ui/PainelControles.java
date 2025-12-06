@@ -10,7 +10,6 @@ import javax.swing.*;
 import java.util.Random;
 
 public class PainelControles {
-
     private final Random sorteio;
     private Tela tela;
 
@@ -90,6 +89,7 @@ public class PainelControles {
     private Tela getTela() {
         if (tela == null) {
             tela = (Tela) painelTela;
+            tela.setPainelControles(this);
         }
         return tela;
     }
@@ -100,5 +100,11 @@ public class PainelControles {
 
     private void createUIComponents() {
         this.painelTela = new Tela();
+    }
+
+    public void atualizarContadoresBaixas() {
+        contagem_aldeao.setText(String.valueOf(Aldeao.getContagemBaixas()));
+        contagem_arqueiro.setText(String.valueOf(Arqueiro.getContagemBaixas()));
+        contagem_cavaleiro.setText(String.valueOf(Cavaleiro.getContagemBaixas()));
     }
 }

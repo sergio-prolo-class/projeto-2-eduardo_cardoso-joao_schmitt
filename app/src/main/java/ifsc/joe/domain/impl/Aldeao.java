@@ -7,6 +7,10 @@ import ifsc.joe.utils.Config;
 public class Aldeao extends Personagem implements Coletador {
     private static int contagem_baixas;
 
+    public static int getContagemBaixas() {
+        return contagem_baixas;
+    }
+
     public Aldeao(int x, int y) {
         super(x, y, "aldeao", Config.ALDEAO_VIDA, Config.ALDEAO_ATAQUE, Config.ALDEAO_ALCANCE);
     }

@@ -11,6 +11,7 @@ import java.util.Set;
 import java.util.stream.Collectors;
 
 public class Tela extends JPanel {
+    private PainelControles painelControles;
 
     private final Set<Personagem> personagens;
     private final Timer gameLoop;
@@ -25,12 +26,16 @@ public class Tela extends JPanel {
         this.gameLoop.start();
     }
 
+    public void setPainelControles(PainelControles painelControles) {
+        this.painelControles = painelControles;
+    }
+
     @Override
     public void paint(Graphics g) {
         super.paint(g);
 
         // Remove da lista apenas se estiver morto E totalmente transparente
-        personagens.removeIf(p -> {
+        boolean removido = personagens.removeIf(p -> {
             if (p.isRemovivel()) {
                 System.out.println("Baixa confirmada: " + p.getClass().getSimpleName() + " eliminado.");
                 p.aumentar_baixas();
@@ -38,6 +43,9 @@ public class Tela extends JPanel {
             }
             return false;
         });
+        if (removido && painelControles != null) {
+            painelControles.atualizarContadoresBaixas();
+        }
 
         // Desenha todos os personagens (os mortos desenham-se com transparência até sumirem)
         this.personagens.forEach(p -> p.desenhar(g, this));
