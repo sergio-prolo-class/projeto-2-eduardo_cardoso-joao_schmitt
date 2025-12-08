@@ -7,6 +7,7 @@ import ifsc.joe.utils.Config;
 
 public class Cavaleiro extends Personagem implements Guerreiro, ComMontaria {
     private static int contagem_baixas;
+    private boolean estaMontado;
 
     public static int getContagemBaixas() {
         return contagem_baixas;
@@ -14,6 +15,10 @@ public class Cavaleiro extends Personagem implements Guerreiro, ComMontaria {
 
     public Cavaleiro(int x, int y) {
         super(x, y, "cavaleiro", Config.CAVALEIRO_VIDA, Config.CAVALEIRO_ATAQUE, Config.CAVALEIRO_ALCANCE);
+    }
+
+    public boolean isEstaMontado() {
+        return estaMontado;
     }
 
     @Override
@@ -24,8 +29,10 @@ public class Cavaleiro extends Personagem implements Guerreiro, ComMontaria {
     }
 
     @Override
-    public void montar() {
-        System.out.println("Cavaleiro montou no cavalo.");
+    public void alternarMontaria() {
+        this.estaMontado = !this.estaMontado;
+        this.nomeImagemBase = (estaMontado ? "cavaleiro" : "guerreiro") + (atacando ? "2" : "");
+        this.icone = this.carregarImagem(this.nomeImagemBase);
     }
 
     @Override

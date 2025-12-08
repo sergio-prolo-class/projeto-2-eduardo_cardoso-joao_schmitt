@@ -2,6 +2,7 @@ package ifsc.joe.ui;
 
 import ifsc.joe.domain.Guerreiro;
 import ifsc.joe.domain.Personagem;
+import ifsc.joe.domain.impl.Cavaleiro;
 import ifsc.joe.enums.Direcao;
 
 import javax.swing.*;
@@ -79,5 +80,17 @@ public class Tela extends JPanel {
                 }
             }
         }
+    }
+
+    public void alternarMontaria() {
+        Set<Personagem> cavaleiros = this.personagens.stream()
+                .filter(p -> p instanceof Cavaleiro)
+                .collect(Collectors.toSet());
+
+        for (Personagem cavaleiro : cavaleiros) {
+            ((Cavaleiro) cavaleiro).alternarMontaria();
+        }
+
+
     }
 }

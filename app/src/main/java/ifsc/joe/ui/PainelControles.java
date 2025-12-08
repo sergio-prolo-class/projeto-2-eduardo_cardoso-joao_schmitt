@@ -33,6 +33,7 @@ public class PainelControles {
     private JLabel contagem_aldeao;
     private JLabel contagem_arqueiro;
     private JLabel contagem_cavaleiro;
+    private JButton montariaButton;
 
     public PainelControles() {
         this.sorteio = new Random();
@@ -43,6 +44,7 @@ public class PainelControles {
         configurarBotoesMovimento();
         configurarBotoesCriacao();
         configurarBotaoAtaque();
+        configurarBotaoMontaria();
     }
 
     private Class<?> getTipoSelecionado() {
@@ -78,6 +80,10 @@ public class PainelControles {
 
     private void configurarBotaoAtaque() {
         atacarButton.addActionListener(e -> getTela().atacarComGuerreiros(getTipoSelecionado()));
+    }
+
+    private void configurarBotaoMontaria() {
+        montariaButton.addActionListener(e -> getTela().alternarMontaria());
     }
 
     private int[] sortearPosicao() {
