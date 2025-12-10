@@ -5,6 +5,7 @@ import ifsc.joe.utils.Config;
 
 import javax.swing.*;
 import java.awt.*;
+import java.awt.image.BufferedImage;
 import java.util.Objects;
 
 public abstract class Personagem {
@@ -88,9 +89,9 @@ public abstract class Personagem {
             double porcentagem = (double) this.vida / this.vidaMaxima;
             int larguraVida = (int) (porcentagem * larguraBarra);
 
-            if (porcentagem > 0.75) {
+            if (porcentagem > 0.74) {
                 g.setColor(Color.GREEN);
-            } else if (porcentagem > 0.25) {
+            } else if (porcentagem > 0.24) {
                 g.setColor(Color.YELLOW);
             } else {
                 g.setColor(Color.RED);
@@ -109,10 +110,10 @@ public abstract class Personagem {
         int passo = this.velocidade;
 
         switch (direcao) {
-            case CIMA     -> this.posY -= passo;
-            case BAIXO    -> this.posY += passo;
+            case CIMA -> this.posY -= passo;
+            case BAIXO -> this.posY += passo;
             case ESQUERDA -> this.posX -= passo;
-            case DIREITA  -> this.posX += passo;
+            case DIREITA -> this.posX += passo;
         }
 
         if (this.icone != null) {
@@ -143,18 +144,35 @@ public abstract class Personagem {
         return Math.sqrt(Math.pow(centroX - outroCentroX, 2) + Math.pow(centroY - outroCentroY, 2));
     }
 
-    public int getAtaque() { return ataque; }
-    public int getAlcance() { return alcance; }
-    public int getVida() { return vida; }
+    public int getAtaque() {
+        return ataque;
+    }
+
+    public int getAlcance() {
+        return alcance;
+    }
+
+    public int getVida() {
+        return vida;
+    }
 
     protected Image carregarImagem(String imagem) {
+        String caminho = imagem + ".png";
         try {
             return new ImageIcon(Objects.requireNonNull(
-                    getClass().getClassLoader().getResource("./" + imagem + ".png")
+                    getClass().getClassLoader().getResource(caminho)
             )).getImage();
-        } catch (NullPointerException e) {
-            System.err.println("Imagem não encontrada: " + imagem);
-            return null;
+        } catch (Exception e) {
+            System.err.println("ERRO: Imagem não encontrada: " + caminho);
+
+            BufferedImage placeholder = new BufferedImage(32, 32, BufferedImage.TYPE_INT_ARGB);
+            Graphics g = placeholder.getGraphics();
+            g.setColor(Color.MAGENTA); // Cor chamativa para saber que deu erro
+            g.fillRect(0, 0, 32, 32);
+            g.setColor(Color.BLACK);
+            g.drawRect(0, 0, 31, 31);
+            g.dispose();
+            return placeholder;
         }
     }
 }

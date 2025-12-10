@@ -15,6 +15,8 @@ public class Cavaleiro extends Personagem implements Guerreiro, ComMontaria {
 
     public Cavaleiro(int x, int y) {
         super(x, y, "cavaleiro", Config.CAVALEIRO_VIDA, Config.CAVALEIRO_ATAQUE, Config.CAVALEIRO_ALCANCE);
+        this.estaMontado = true;
+        this.velocidade = this.velocidade * 4;
     }
 
     public boolean isEstaMontado() {
@@ -31,9 +33,9 @@ public class Cavaleiro extends Personagem implements Guerreiro, ComMontaria {
     @Override
     public void alternarMontaria() {
         this.estaMontado = !this.estaMontado;
-        this.nomeImagemBase = (estaMontado ? "cavaleiro" : "guerreiro") + (atacando ? "2" : "");
+        this.nomeImagemBase = (estaMontado ? "cavaleiro" : "guerreiro");
         this.velocidade = estaMontado ? this.velocidade * 4 : Config.VELOCIDADE_PADRAO;
-        this.icone = this.carregarImagem(this.nomeImagemBase);
+        this.icone = this.carregarImagem(this.nomeImagemBase + (atacando ? "2" : ""));
     }
 
     @Override
