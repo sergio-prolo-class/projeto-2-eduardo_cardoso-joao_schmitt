@@ -27,4 +27,9 @@ public class Config {
     public static final int CAVALEIRO_VIDA = 80;
     public static final int CAVALEIRO_ATAQUE = 15;
     public static final int CAVALEIRO_ALCANCE = 50;
+
+    // Chances de Esquiva
+    public static final double ALDEAO_ESQUIVA = 0.10;
+    public static final double ARQUEIRO_ESQUIVA = 0.25;
+    public static final double CAVALEIRO_ESQUIVA = 0.15;
 }

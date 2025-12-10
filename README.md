@@ -24,85 +24,76 @@ Requisitos" disponibilizada pelo professor, permitindo escolhas de design e impl
 
 ---
 
-## ✅ Funcionalidades Implementadas (Pontuação atingida até o momento: 32/32)
+## ✅ Funcionalidades Implementadas (Pontuação atingida: 37 pontos)
 
 Abaixo estão listados os requisitos da Árvore de Habilidades que já foram concluídos no projeto:
 
 ### 🏗️ Base do Projeto (Requisito Obrigatório)
 
-- [x] **Hierarquia de Classes:** Criação da classe abstrata `Personagem` e subclasses `Aldeao`, `Arqueiro` e
-  `Cavaleiro`.
-- [x] **Interfaces:** Definição e uso de `Guerreiro`, `Coletador` e `ComMontaria`.
-- [x] **Polimorfismo:** A `Tela` gerencia uma coleção genérica de `Personagem`, permitindo desenhar e mover qualquer
-  unidade.
-- [x] **Criação:** Botões de criação funcionando para todos os tipos de personagens.
-
-### 🎮 Controles Avançados
-
-- [x] **Filtro por Tipo (4 pontos):** - Implementação de *Radio Buttons* (Todos, Aldeão, Arqueiro, Cavaleiro).
-    - Comandos de movimento e ataque afetam apenas as unidades do tipo selecionado.
-    - Uso de filtragem dinâmica com `instanceof` e Streams.
-- [x] **Controle de Montaria (5 pontos):** - Implementação de botão Montar/Desmontar na interface.
-    - Velocidade alterada conforme estado (Montado fica mais rápido e Desmontado mais devagar)
-    - Mudança de sprite conforme estado
-- [x] **Atalhos de teclado (6 pontos):** - Implementação de controles por teclado.
-    - Teclas WASD ou setas para movimento 
-    - Teclas numéricas (1, 2, 3) para criação de personagem
-    - Barra de espaco para atacar
-    - Tab para alternar filtros de personagem
-    - M para montar ou desmontar
+- [x] **Hierarquia de Classes:** Criação da classe abstrata `Personagem` e suas subclasses (`Aldeao`, `Arqueiro`,
+  `Cavaleiro`).
+- [x] **Interfaces:** Implementação de `Guerreiro`, `Coletador` e `ComMontaria`.
+- [x] **Controles Básicos:** Botões para criar personagens de cada tipo.
 
 ### ⚔️ Sistema de Combate
 
 - [x] **Ataque Básico (3 pontos):**
-    - Botão "Atacar" funcional para unidades do tipo `Guerreiro`.
-    - Sistema de dano implementado (atributo `ataque` vs `vida`).
-    - **Feedback Visual:** Troca de *sprites* (imagens) durante a ação de ataque para todas as classes.
-    - **Dano em Área:** Unidades atacam inimigos dentro de um raio de proximidade.
+    - Personagens guerreiros podem atacar.
+    - Animação de troca de sprites (modo ataque).
+    - Dano calculado e subtraído da vida do alvo.
 
 - [x] **Sistema de Morte (3 pontos):**
-    - Monitoramento de vida: Personagens com vida igual ou menor que zero são detectados automaticamente.
-    - Gestão de Memória: Remoção segura do objeto da coleção de personagens e da tela.
-    - **Feedback:** Mensagem de "Baixa confirmada" exibida no terminal.
-    - Integração visual com a Barra de Vida (vida zerada resulta em eliminação imediata).
+    - Remoção lógica e visual de personagens com vida <= 0.
+    - Efeito de *fade-out* (transparência gradual) antes de sumir.
+    - Contador de baixas por tipo de unidade.
 
 - [x] **Alcance Variável (4 pontos):**
-    - Definição de raios de ataque distintos por classe (Aldeão: 50px, Cavaleiro: 75px, Arqueiro: 150px).
+    - Definição de raios de ataque distintos por classe (Aldeão: 30px, Cavaleiro: 50px, Arqueiro: 150px).
     - Cálculo de distância preciso entre personagens.
     - Validação de alcance antes de aplicar dano.
-    - **Indicador Visual:** Círculo pontilhado exibido ao ativar o modo de ataque.
+    - **Indicador Visual:** Círculo exibido ao atacar.
+
+- [x] **Esquiva (5 pontos) - NOVO:**
+    - Chance de ignorar completamente o dano recebido.
+    - Probabilidades: Aldeão (10%), Cavaleiro (15%), Arqueiro (25%).
+    - **Feedback Visual:** Texto flutuante "ESQUIVOU!" aparece sobre o personagem.
+
+### 🎮 Interface e Controles
+
+- [x] **Filtro por Tipo (4 pontos):**
+    - Seleção de unidades via Radio Buttons ou tecla `TAB`.
+    - Comandos afetam apenas o grupo selecionado ("Todos", "Aldeão", etc.).
+
+- [x] **Controle de Montaria (5 pontos):**
+    - Cavaleiros podem alternar entre montado e desmontado (Tecla `M`).
+    - Mudança de velocidade (4x mais rápido montado) e sprite.
+
+- [x] **Atalhos de Teclado (6 pontos):**
+    - `WASD` / Setas: Movimentação.
+    - `1`, `2`, `3`: Criar unidades.
+    - `Espaço`: Atacar.
+    - `TAB`: Alterar filtros de tipo.
+
+- [x] **Barra de Vida (4 pontos):**
+    - Barras dinâmicas sobre cada personagem (Verde > Amarelo > Vermelho).
 
 ### 🏛️ Arquitetura de Software
 
 - [x] **Arquivo de Configurações (3 pontos):**
-    - Centralização de constantes (vida, ataque, alcance, UI) na classe `Config`.
-    - Remoção de "números mágicos" do código das classes de domínio.
-    - Facilitação do balanceamento do jogo em um único local.
-
-### 🖥️ Interface do usuário
-
-- [x] **Barra de Vida (4 pontos):**
-    - Implementação gráfica de barras de vida dinâmicas sobre cada personagem.
-    - Feedback visual imediato da saúde atual, onde ela fica verde (vida entre 75-100%), amarela (vida entre 25-74%) ou
-      vermelha (vida entre 0-24%).
+    - Centralização de constantes (vida, ataque, chances de esquiva) na classe `Config`.
+- [x] **Tratamento de Erros:** Sistema robusto de carregamento de imagens (previne fechamento do jogo se faltar sprite).
 
 ---
 
 ## 🚀 Como Executar o programa
 
 ### Pré-requisitos
-
-* Java JDK 21 ou superior.
-* Gradle.
+- Java JDK 17 ou superior.
+- Gradle.
 
 ### Passos
-
-1. Clone o repositório utilizando o comando:
-   ``` git clone https://github.com/sergio-prolo-class/projeto-2-eduardo_cardoso-joao_schmitt.git ```
-2. Navegue até a pasta do projeto.
-3. Execute via terminal:
-
-**Linux/Mac:**
-
-```bash
-./gradlew run
+1. Clone o repositório.
+2. Abra o terminal na pasta do projeto.
+3. Execute:
+   ```bash
+   ./gradlew run

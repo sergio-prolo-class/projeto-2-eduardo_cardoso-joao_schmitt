@@ -14,6 +14,7 @@ public class Aldeao extends Personagem implements Coletador, Guerreiro {
 
     public Aldeao(int x, int y) {
         super(x, y, "aldeao", Config.ALDEAO_VIDA, Config.ALDEAO_ATAQUE, Config.ALDEAO_ALCANCE);
+        this.chanceEsquiva = Config.ALDEAO_ESQUIVA;
     }
 
     @Override

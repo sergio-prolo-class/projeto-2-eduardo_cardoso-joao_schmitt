@@ -19,6 +19,9 @@ public abstract class Personagem {
     protected int ataque;
     protected int alcance;
     protected int velocidade;
+    protected double chanceEsquiva;
+    protected String textoFlutuante = "";
+    protected int tempoTexto = 0;
 
     protected float opacidade = 1.0f;
     protected float taxaFade = Config.TAXA_FADE_OUT;
@@ -60,6 +63,17 @@ public abstract class Personagem {
 
         if (this.atacando && this.vida > 0) {
             desenharAlcance(g);
+        }
+
+        if (this.tempoTexto > 0) {
+            g.setColor(Color.RED);
+            g.setFont(new Font("Arial", Font.BOLD, 14));
+
+            int deslocamentoY = (40 - this.tempoTexto) / 2;
+
+            g.drawString(this.textoFlutuante, this.posX, this.posY - deslocamentoY);
+
+            this.tempoTexto--;
         }
 
         g2d.setComposite(compositeOriginal);
@@ -125,10 +139,17 @@ public abstract class Personagem {
     public void sofrerDano(int dano) {
         if (this.vida <= 0) return;
 
+        if (Math.random() < this.chanceEsquiva) {
+            this.textoFlutuante = "ESQUIVOU!";
+            this.tempoTexto = 40;
+            System.out.println("ESQUIVOU! " + this.getClass().getSimpleName());
+            return;
+        }
+
         this.vida -= dano;
         if (this.vida < 0) this.vida = 0;
 
-        System.out.println(this.getClass().getSimpleName() + " sofreu " + dano + " de dano. Vida: " + this.vida + "/" + this.vidaMaxima);
+        System.out.println(this.getClass().getSimpleName() + " sofreu " + dano);
     }
 
     public boolean isRemovivel() {

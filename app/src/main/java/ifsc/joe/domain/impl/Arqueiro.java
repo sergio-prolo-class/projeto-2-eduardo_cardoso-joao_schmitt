@@ -13,6 +13,7 @@ public class Arqueiro extends Personagem implements Guerreiro {
 
     public Arqueiro(int x, int y) {
         super(x, y, "arqueiro", Config.ARQUEIRO_VIDA, Config.ARQUEIRO_ATAQUE, Config.ARQUEIRO_ALCANCE);
+        this.chanceEsquiva = Config.ARQUEIRO_ESQUIVA;
     }
 
     @Override
