@@ -42,6 +42,9 @@ Abaixo estão listados os requisitos da Árvore de Habilidades que já foram con
 - [x] **Filtro por Tipo (4 pontos):** - Implementação de *Radio Buttons* (Todos, Aldeão, Arqueiro, Cavaleiro).
     - Comandos de movimento e ataque afetam apenas as unidades do tipo selecionado.
     - Uso de filtragem dinâmica com `instanceof` e Streams.
+- [x] **Controle de Montaria (5 pontos):** - Implementação de botão Montar/Desmontar na interface.
+    - Velocidade alterada conforme estado (Montado fica mais rápido e Desmontado mais devagar)
+    - Mudança de sprite conforme estado
 
 ### ⚔️ Sistema de Combate
 
