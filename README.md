@@ -24,7 +24,7 @@ Requisitos" disponibilizada pelo professor, permitindo escolhas de design e impl
 
 ---
 
-## ✅ Funcionalidades Implementadas (Pontuação atingida até o momento: 21/32)
+## ✅ Funcionalidades Implementadas (Pontuação atingida até o momento: 32/32)
 
 Abaixo estão listados os requisitos da Árvore de Habilidades que já foram concluídos no projeto:
 
@@ -45,6 +45,12 @@ Abaixo estão listados os requisitos da Árvore de Habilidades que já foram con
 - [x] **Controle de Montaria (5 pontos):** - Implementação de botão Montar/Desmontar na interface.
     - Velocidade alterada conforme estado (Montado fica mais rápido e Desmontado mais devagar)
     - Mudança de sprite conforme estado
+- [x] **Atalhos de teclado (6 pontos):** - Implementação de controles por teclado.
+    - Teclas WASD ou setas para movimento 
+    - Teclas numéricas (1, 2, 3) para criação de personagem
+    - Barra de espaco para atacar
+    - Tab para alternar filtros de personagem
+    - M para montar ou desmontar
 
 ### ⚔️ Sistema de Combate
 

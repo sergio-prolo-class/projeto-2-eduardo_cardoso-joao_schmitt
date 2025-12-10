@@ -7,6 +7,7 @@ import ifsc.joe.enums.Direcao;
 import ifsc.joe.utils.Config;
 
 import javax.swing.*;
+import java.awt.event.KeyEvent;
 import java.util.Random;
 
 public class PainelControles {
@@ -38,6 +39,125 @@ public class PainelControles {
     public PainelControles() {
         this.sorteio = new Random();
         configurarListeners();
+        configurarAtalhosTeclado();
+        desabilitarFocoElementos();
+    }
+
+    // Necessario porque sem isso ao apertar TAB, os elementos da interface vão sendo percorridos e atrapalham os outros atalhos
+    private void desabilitarFocoElementos() {
+        bCriaAldeao.setFocusable(false);
+        bCriaArqueiro.setFocusable(false);
+        bCriaCavaleiro.setFocusable(false);
+        todosRadioButton.setFocusable(false);
+        aldeaoRadioButton.setFocusable(false);
+        arqueiroRadioButton.setFocusable(false);
+        cavaleiroRadioButton.setFocusable(false);
+        atacarButton.setFocusable(false);
+        buttonCima.setFocusable(false);
+        buttonEsquerda.setFocusable(false);
+        buttonBaixo.setFocusable(false);
+        buttonDireita.setFocusable(false);
+    }
+
+    private void configurarAtalhosTeclado() {
+        getTela(); // Garante que tela nao seja null
+
+        InputMap inputMap = painelPrincipal.getInputMap(JComponent.WHEN_IN_FOCUSED_WINDOW);
+        ActionMap actionMap = painelPrincipal.getActionMap();
+
+        // Movimentacao
+        inputMap.put(KeyStroke.getKeyStroke("W"), "moveUp");
+        inputMap.put(KeyStroke.getKeyStroke("UP"), "moveUp");
+        actionMap.put("moveUp", new AbstractAction() {
+            public void actionPerformed(java.awt.event.ActionEvent e) {
+                buttonCima.doClick();
+            }
+        });
+
+        inputMap.put(KeyStroke.getKeyStroke("A"), "moveLeft");
+        inputMap.put(KeyStroke.getKeyStroke("LEFT"), "moveLeft");
+        actionMap.put("moveLeft", new AbstractAction() {
+            public void actionPerformed(java.awt.event.ActionEvent e) {
+                buttonEsquerda.doClick();
+            }
+        });
+
+        inputMap.put(KeyStroke.getKeyStroke("S"), "moveDown");
+        inputMap.put(KeyStroke.getKeyStroke("DOWN"), "moveDown");
+        actionMap.put("moveDown", new AbstractAction() {
+            public void actionPerformed(java.awt.event.ActionEvent e) {
+                buttonBaixo.doClick();
+            }
+        });
+
+        inputMap.put(KeyStroke.getKeyStroke("D"), "moveRight");
+        inputMap.put(KeyStroke.getKeyStroke("RIGHT"), "moveRight");
+        actionMap.put("moveRight", new AbstractAction() {
+            public void actionPerformed(java.awt.event.ActionEvent e) {
+                buttonDireita.doClick();
+            }
+        });
+
+        // Criar personagens
+        inputMap.put(KeyStroke.getKeyStroke("1"), "criaAldeao");
+        actionMap.put("criaAldeao", new AbstractAction() {
+            public void actionPerformed(java.awt.event.ActionEvent e) {
+                bCriaAldeao.doClick();
+            }
+        });
+        inputMap.put(KeyStroke.getKeyStroke("2"), "criaArqueiro");
+        actionMap.put("criaArqueiro", new AbstractAction() {
+            public void actionPerformed(java.awt.event.ActionEvent e) {
+                bCriaArqueiro.doClick();
+            }
+        });
+        inputMap.put(KeyStroke.getKeyStroke("3"), "criaCavaleiro");
+        actionMap.put("criaCavaleiro", new AbstractAction() {
+            public void actionPerformed(java.awt.event.ActionEvent e) {
+                bCriaCavaleiro.doClick();
+            }
+        });
+
+        // Atacar
+        inputMap.put(KeyStroke.getKeyStroke("SPACE"), "atacar");
+        actionMap.put("atacar", new AbstractAction() {
+            public void actionPerformed(java.awt.event.ActionEvent e) {
+                atacarButton.doClick();
+            }
+        });
+
+        // Alternar filtro de tipo (Tab)
+        inputMap.put(KeyStroke.getKeyStroke(KeyEvent.VK_TAB, 0), "alternarFiltro");
+        actionMap.put("alternarFiltro", new AbstractAction() {
+            public void actionPerformed(java.awt.event.ActionEvent e) {
+                alternarFiltros();
+            }
+        });
+
+        // Montar/Desmontar (M)
+        inputMap.put(KeyStroke.getKeyStroke("M"), "montarDesmontar");
+        actionMap.put("montarDesmontar", new AbstractAction() {
+            public void actionPerformed(java.awt.event.ActionEvent e) {
+                montariaButton.doClick();
+            }
+        });
+    }
+
+
+    private void alternarFiltros() {
+        if (todosRadioButton.isSelected()) {
+            aldeaoRadioButton.setSelected(true);
+            montariaButton.setEnabled(false);
+        } else if (aldeaoRadioButton.isSelected()) {
+            arqueiroRadioButton.setSelected(true);
+            montariaButton.setEnabled(false);
+        } else if (arqueiroRadioButton.isSelected()) {
+            cavaleiroRadioButton.setSelected(true);
+            montariaButton.setEnabled(true);
+        } else {
+            todosRadioButton.setSelected(true);
+            montariaButton.setEnabled(true);
+        }
     }
 
     private void configurarListeners() {
@@ -108,6 +228,8 @@ public class PainelControles {
         if (tela == null) {
             tela = (Tela) painelTela;
             tela.setPainelControles(this);
+            tela.setFocusable(true);
+            tela.setFocusTraversalKeysEnabled(false);
         }
         return tela;
     }
