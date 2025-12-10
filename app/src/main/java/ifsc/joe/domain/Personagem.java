@@ -17,7 +17,7 @@ public abstract class Personagem {
     protected int vidaMaxima;
     protected int ataque;
     protected int alcance;
-    protected double velocidade;
+    protected int velocidade;
 
     protected float opacidade = 1.0f;
     protected float taxaFade = Config.TAXA_FADE_OUT;
@@ -34,6 +34,7 @@ public abstract class Personagem {
         this.alcance = alcance;
         this.atacando = false;
         this.icone = carregarImagem(nomeImagemBase);
+        this.velocidade = Config.VELOCIDADE_PADRAO;
     }
 
     public void desenhar(Graphics g, JPanel painel) {
@@ -105,7 +106,7 @@ public abstract class Personagem {
     public void mover(Direcao direcao, int maxLargura, int maxAltura) {
         if (this.vida <= 0) return;
 
-        int passo = Config.VELOCIDADE_PADRAO;
+        int passo = this.velocidade;
 
         switch (direcao) {
             case CIMA     -> this.posY -= passo;

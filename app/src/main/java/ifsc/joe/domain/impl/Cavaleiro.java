@@ -32,6 +32,7 @@ public class Cavaleiro extends Personagem implements Guerreiro, ComMontaria {
     public void alternarMontaria() {
         this.estaMontado = !this.estaMontado;
         this.nomeImagemBase = (estaMontado ? "cavaleiro" : "guerreiro") + (atacando ? "2" : "");
+        this.velocidade = estaMontado ? this.velocidade * 4 : Config.VELOCIDADE_PADRAO;
         this.icone = this.carregarImagem(this.nomeImagemBase);
     }
 

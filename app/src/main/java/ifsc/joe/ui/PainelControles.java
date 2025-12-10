@@ -48,9 +48,14 @@ public class PainelControles {
     }
 
     private Class<?> getTipoSelecionado() {
+        montariaButton.setEnabled(false);
+
         if (aldeaoRadioButton.isSelected()) return Aldeao.class;
         if (arqueiroRadioButton.isSelected()) return Arqueiro.class;
+
+        montariaButton.setEnabled(true);
         if (cavaleiroRadioButton.isSelected()) return Cavaleiro.class;
+
         return null; // "Todos"
     }
 
@@ -62,6 +67,13 @@ public class PainelControles {
     }
 
     private void configurarBotoesCriacao() {
+        todosRadioButton.addActionListener(e -> getTipoSelecionado());
+        aldeaoRadioButton.addActionListener(e -> getTipoSelecionado());
+        arqueiroRadioButton.addActionListener(e -> getTipoSelecionado());
+        cavaleiroRadioButton.addActionListener(e -> getTipoSelecionado());
+        montariaButton.addActionListener(e -> getTipoSelecionado());
+
+
         bCriaAldeao.addActionListener(e -> {
             int[] pos = sortearPosicao();
             getTela().adicionarPersonagem(new Aldeao(pos[0], pos[1]));
