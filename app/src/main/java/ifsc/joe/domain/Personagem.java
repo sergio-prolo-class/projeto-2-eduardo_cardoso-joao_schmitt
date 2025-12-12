@@ -3,16 +3,25 @@ package ifsc.joe.domain;
 import ifsc.joe.enums.Direcao;
 import ifsc.joe.utils.Config;
 
+import javax.sound.sampled.*;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.image.BufferedImage;
+import java.io.IOException;
+import java.net.URL;
 import java.util.Objects;
+
+import javax.sound.sampled.*;
+import java.io.File;
+import java.io.IOException;
+import java.net.URL;
 
 public abstract class Personagem {
     protected int posX, posY;
     protected Image icone;
     protected boolean atacando;
     protected String nomeImagemBase;
+    protected String somAtaque;
 
     protected int vida;
     protected int vidaMaxima;
@@ -28,7 +37,7 @@ public abstract class Personagem {
 
     abstract public void aumentar_baixas();
 
-    public Personagem(int x, int y, String nomeImagemBase, int vida, int ataque, int alcance) {
+    public Personagem(int x, int y, String nomeImagemBase, int vida, int ataque, int alcance, String somAtaque) {
         this.posX = x;
         this.posY = y;
         this.nomeImagemBase = nomeImagemBase;
@@ -39,6 +48,7 @@ public abstract class Personagem {
         this.atacando = false;
         this.icone = carregarImagem(nomeImagemBase);
         this.velocidade = Config.VELOCIDADE_PADRAO;
+        this.somAtaque = somAtaque;
     }
 
     public void desenhar(Graphics g, JPanel painel) {
@@ -194,6 +204,27 @@ public abstract class Personagem {
             g.drawRect(0, 0, 31, 31);
             g.dispose();
             return placeholder;
+        }
+    }
+
+    protected void tocarSomAtaque() {
+        try {
+            URL url = getClass().getClassLoader().getResource(this.somAtaque);
+
+            if (url == null) {
+                System.err.println("Sound not found: " + this.somAtaque);
+                return;
+            }
+            AudioInputStream audioInputStream = AudioSystem.getAudioInputStream(url);
+
+            // Get a Clip resource
+            Clip clip = AudioSystem.getClip();
+
+            // Open the audio stream and start playing
+            clip.open(audioInputStream);
+            clip.start(); // Plays the sound once
+        } catch (UnsupportedAudioFileException | IOException | LineUnavailableException ex) {
+            ex.printStackTrace();
         }
     }
 }

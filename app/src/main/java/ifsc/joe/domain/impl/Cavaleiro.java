@@ -14,7 +14,7 @@ public class Cavaleiro extends Personagem implements Guerreiro, ComMontaria {
     }
 
     public Cavaleiro(int x, int y) {
-        super(x, y, "cavaleiro", Config.CAVALEIRO_VIDA, Config.CAVALEIRO_ATAQUE, Config.CAVALEIRO_ALCANCE);
+        super(x, y, "cavaleiro", Config.CAVALEIRO_VIDA, Config.CAVALEIRO_ATAQUE, Config.CAVALEIRO_ALCANCE, "espada.wav");
         this.estaMontado = true;
         this.velocidade = this.velocidade * 4;
         this.chanceEsquiva = Config.CAVALEIRO_ESQUIVA;

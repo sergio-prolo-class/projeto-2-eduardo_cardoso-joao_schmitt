@@ -13,12 +13,14 @@ public class Aldeao extends Personagem implements Coletador, Guerreiro {
     }
 
     public Aldeao(int x, int y) {
-        super(x, y, "aldeao", Config.ALDEAO_VIDA, Config.ALDEAO_ATAQUE, Config.ALDEAO_ALCANCE);
+        super(x, y, "aldeao", Config.ALDEAO_VIDA, Config.ALDEAO_ATAQUE, Config.ALDEAO_ALCANCE, "lanca.mp3");
         this.chanceEsquiva = Config.ALDEAO_ESQUIVA;
     }
 
     @Override
     public void atacar() {
+        this.tocarSomAtaque();
+
         this.atacando = !this.atacando;
         this.icone = this.carregarImagem(this.nomeImagemBase + (atacando ? "2" : ""));
         System.out.println("Aldeão atacando!");
