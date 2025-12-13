@@ -36,6 +36,14 @@ public abstract class Personagem {
     protected float opacidade = 1.0f;
     protected float taxaFade = Config.TAXA_FADE_OUT;
 
+    private static final Clip somDano;
+    private static final Clip somMorte;
+
+    static {
+        somDano = Config.obterClipSom("dano.wav");
+        somMorte = Config.obterClipSom("morte.wav");
+    }
+
     abstract public void aumentar_baixas();
 
     public Personagem(int x, int y, String nomeImagemBase, int vida, int ataque, int alcance, String somAtaque) {
@@ -157,10 +165,16 @@ public abstract class Personagem {
             return;
         }
 
-        this.vida -= dano;
-        if (this.vida < 0) this.vida = 0;
-
         System.out.println(this.getClass().getSimpleName() + " sofreu " + dano);
+
+        this.vida -= dano;
+        if (this.vida < 0) {
+            this.vida = 0;
+            Config.tocarSom(somMorte);
+            return;
+        }
+
+        Config.tocarSom(somDano);
     }
 
     public boolean isRemovivel() {
@@ -205,34 +219,6 @@ public abstract class Personagem {
             g.drawRect(0, 0, 31, 31);
             g.dispose();
             return placeholder;
-        }
-    }
-
-    static protected Clip obterClipSom(String nomeSom) {
-        try {
-            URL url = Personagem.class.getClassLoader().getResource(nomeSom);
-            if (url != null) {
-                AudioInputStream audioInputStream = AudioSystem.getAudioInputStream(url);
-                Clip clip = AudioSystem.getClip();
-                clip.open(audioInputStream);
-                return clip;
-            } else {
-                System.err.println("Sound not found: lanca.wav");
-                return null;
-            }
-        } catch (Exception e) {
-            e.printStackTrace();
-            return null;
-        }
-    }
-
-    static protected void tocarSomAtaque(Clip ataqueClip) {
-        if (ataqueClip != null) {
-            if (ataqueClip.isRunning()) {
-                ataqueClip.stop();
-            }
-            ataqueClip.setFramePosition(0);
-            ataqueClip.start();
         }
     }
 }

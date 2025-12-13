@@ -9,10 +9,10 @@ import javax.sound.sampled.*;
 
 public class Aldeao extends Personagem implements Coletador, Guerreiro {
     private static int contagem_baixas;
-    private static Clip ataqueClip;
+    final private static Clip ataqueClip;
 
     static {
-        ataqueClip = obterClipSom("lanca.wav");
+        ataqueClip = Config.obterClipSom("lanca.wav");
     }
 
     public static int getContagemBaixas() {
@@ -26,7 +26,7 @@ public class Aldeao extends Personagem implements Coletador, Guerreiro {
 
     @Override
     public void atacar() {
-        tocarSomAtaque(ataqueClip);
+        Config.tocarSom(ataqueClip);
         this.atacando = !this.atacando;
         this.icone = this.carregarImagem(this.nomeImagemBase + (atacando ? "2" : ""));
         System.out.println("Aldeão atacando!");

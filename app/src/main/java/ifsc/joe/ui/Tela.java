@@ -4,7 +4,9 @@ import ifsc.joe.domain.Guerreiro;
 import ifsc.joe.domain.Personagem;
 import ifsc.joe.domain.impl.Cavaleiro;
 import ifsc.joe.enums.Direcao;
+import ifsc.joe.utils.Config;
 
+import javax.sound.sampled.Clip;
 import javax.swing.*;
 import java.awt.*;
 import java.util.HashSet;
