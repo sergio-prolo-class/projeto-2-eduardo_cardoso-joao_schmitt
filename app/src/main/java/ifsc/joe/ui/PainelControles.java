@@ -1,9 +1,12 @@
 package ifsc.joe.ui;
 
+import ifsc.joe.domain.Personagem;
+import ifsc.joe.domain.PersonagemFactory;
 import ifsc.joe.domain.impl.Aldeao;
 import ifsc.joe.domain.impl.Arqueiro;
 import ifsc.joe.domain.impl.Cavaleiro;
 import ifsc.joe.enums.Direcao;
+import ifsc.joe.enums.TipoPersonagem;
 import ifsc.joe.utils.Config;
 
 import javax.swing.*;
@@ -186,6 +189,13 @@ public class PainelControles {
         buttonDireita.addActionListener(e -> getTela().movimentarPersonagens(Direcao.DIREITA, getTipoSelecionado()));
     }
 
+    // Metodo auxiliar para usar a Factory e evitar repetição de código
+    private void criarPersonagem(TipoPersonagem tipo) {
+        int[] pos = sortearPosicao();
+        Personagem p = PersonagemFactory.criar(tipo, pos[0], pos[1]);
+        getTela().adicionarPersonagem(p);
+    }
+
     private void configurarBotoesCriacao() {
         todosRadioButton.addActionListener(e -> getTipoSelecionado());
         aldeaoRadioButton.addActionListener(e -> getTipoSelecionado());
@@ -193,21 +203,9 @@ public class PainelControles {
         cavaleiroRadioButton.addActionListener(e -> getTipoSelecionado());
         montariaButton.addActionListener(e -> getTipoSelecionado());
 
-
-        bCriaAldeao.addActionListener(e -> {
-            int[] pos = sortearPosicao();
-            getTela().adicionarPersonagem(new Aldeao(pos[0], pos[1]));
-        });
-
-        bCriaArqueiro.addActionListener(e -> {
-            int[] pos = sortearPosicao();
-            getTela().adicionarPersonagem(new Arqueiro(pos[0], pos[1]));
-        });
-
-        bCriaCavaleiro.addActionListener(e -> {
-            int[] pos = sortearPosicao();
-            getTela().adicionarPersonagem(new Cavaleiro(pos[0], pos[1]));
-        });
+        bCriaAldeao.addActionListener(e -> criarPersonagem(TipoPersonagem.ALDEAO));
+        bCriaArqueiro.addActionListener(e -> criarPersonagem(TipoPersonagem.ARQUEIRO));
+        bCriaCavaleiro.addActionListener(e -> criarPersonagem(TipoPersonagem.CAVALEIRO));
     }
 
     private void configurarBotaoAtaque() {
