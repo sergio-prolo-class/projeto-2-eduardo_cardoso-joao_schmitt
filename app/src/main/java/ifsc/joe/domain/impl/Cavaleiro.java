@@ -5,15 +5,9 @@ import ifsc.joe.domain.Guerreiro;
 import ifsc.joe.domain.Personagem;
 import ifsc.joe.utils.Config;
 
-import javax.sound.sampled.Clip;
 
 public class Cavaleiro extends Personagem implements Guerreiro, ComMontaria {
     private static int contagem_baixas;
-    final private static Clip ataqueClip;
-
-    static {
-        ataqueClip = Config.obterClipSom("espada.wav");
-    }
     private boolean estaMontado;
 
     public static int getContagemBaixas() {
@@ -33,7 +27,6 @@ public class Cavaleiro extends Personagem implements Guerreiro, ComMontaria {
 
     @Override
     public void atacar() {
-        Config.tocarSom(ataqueClip);
         this.atacando = !this.atacando;
         this.icone = this.carregarImagem(this.nomeImagemBase + (atacando ? "2" : ""));
         System.out.println("Cavaleiro atacando!");

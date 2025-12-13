@@ -72,6 +72,20 @@ public class Tela extends JPanel {
                 .filter(p -> tipoFiltro == null || tipoFiltro.isInstance(p))
                 .collect(Collectors.toSet());
 
+        // Toca o som de ataque apenas uma vez, se houver pelo menos um atacante, é escolhido o som do primeiro atacante
+        if (!atacantes.isEmpty()) {
+            String som = null;
+            Personagem primeiro = atacantes.iterator().next();
+
+            if (primeiro != null) {
+                som = primeiro.getSomAtaque();
+            }
+            if (som != null) {
+                Clip clip = Config.obterClipSom(som);
+                Config.tocarSom(clip);
+            }
+        }
+
         for (Personagem atacante : atacantes) {
             ((Guerreiro) atacante).atacar();
 

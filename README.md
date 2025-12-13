@@ -24,7 +24,7 @@ Requisitos" disponibilizada pelo professor, permitindo escolhas de design e impl
 
 ---
 
-## ✅ Funcionalidades Implementadas (Pontuação atingida: 37 pontos)
+## ✅ Funcionalidades Implementadas (Pontuação atingida: 42 pontos)
 
 Abaixo estão listados os requisitos da Árvore de Habilidades que já foram concluídos no projeto:
 
@@ -76,6 +76,8 @@ Abaixo estão listados os requisitos da Árvore de Habilidades que já foram con
 
 - [x] **Barra de Vida (4 pontos):**
     - Barras dinâmicas sobre cada personagem (Verde > Amarelo > Vermelho).
+- [x] **Efeitos Sonoros (5 pontos):**
+  - Efeitos sonoros para ataques, dano e morte.
 
 ### 🏛️ Arquitetura de Software
 

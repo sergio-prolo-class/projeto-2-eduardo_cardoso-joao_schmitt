@@ -202,6 +202,8 @@ public abstract class Personagem {
         return vida;
     }
 
+    public String getSomAtaque() { return somAtaque; }
+
     protected Image carregarImagem(String imagem) {
         String caminho = imagem + ".png";
         try {
