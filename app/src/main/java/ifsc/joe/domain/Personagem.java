@@ -1,5 +1,6 @@
 package ifsc.joe.domain;
 
+import ifsc.joe.domain.impl.Aldeao;
 import ifsc.joe.enums.Direcao;
 import ifsc.joe.utils.Config;
 
@@ -207,24 +208,31 @@ public abstract class Personagem {
         }
     }
 
-    protected void tocarSomAtaque() {
+    static protected Clip obterClipSom(String nomeSom) {
         try {
-            URL url = getClass().getClassLoader().getResource(this.somAtaque);
-
-            if (url == null) {
-                System.err.println("Sound not found: " + this.somAtaque);
-                return;
+            URL url = Personagem.class.getClassLoader().getResource(nomeSom);
+            if (url != null) {
+                AudioInputStream audioInputStream = AudioSystem.getAudioInputStream(url);
+                Clip clip = AudioSystem.getClip();
+                clip.open(audioInputStream);
+                return clip;
+            } else {
+                System.err.println("Sound not found: lanca.wav");
+                return null;
             }
-            AudioInputStream audioInputStream = AudioSystem.getAudioInputStream(url);
+        } catch (Exception e) {
+            e.printStackTrace();
+            return null;
+        }
+    }
 
-            // Get a Clip resource
-            Clip clip = AudioSystem.getClip();
-
-            // Open the audio stream and start playing
-            clip.open(audioInputStream);
-            clip.start(); // Plays the sound once
-        } catch (UnsupportedAudioFileException | IOException | LineUnavailableException ex) {
-            ex.printStackTrace();
+    static protected void tocarSomAtaque(Clip ataqueClip) {
+        if (ataqueClip != null) {
+            if (ataqueClip.isRunning()) {
+                ataqueClip.stop();
+            }
+            ataqueClip.setFramePosition(0);
+            ataqueClip.start();
         }
     }
 }

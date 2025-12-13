@@ -5,22 +5,28 @@ import ifsc.joe.domain.Guerreiro;
 import ifsc.joe.domain.Personagem;
 import ifsc.joe.utils.Config;
 
+import javax.sound.sampled.*;
+
 public class Aldeao extends Personagem implements Coletador, Guerreiro {
     private static int contagem_baixas;
+    private static Clip ataqueClip;
+
+    static {
+        ataqueClip = obterClipSom("lanca.wav");
+    }
 
     public static int getContagemBaixas() {
         return contagem_baixas;
     }
 
     public Aldeao(int x, int y) {
-        super(x, y, "aldeao", Config.ALDEAO_VIDA, Config.ALDEAO_ATAQUE, Config.ALDEAO_ALCANCE, "lanca.mp3");
+        super(x, y, "aldeao", Config.ALDEAO_VIDA, Config.ALDEAO_ATAQUE, Config.ALDEAO_ALCANCE, "lanca.wav");
         this.chanceEsquiva = Config.ALDEAO_ESQUIVA;
     }
 
     @Override
     public void atacar() {
-        this.tocarSomAtaque();
-
+        tocarSomAtaque(ataqueClip);
         this.atacando = !this.atacando;
         this.icone = this.carregarImagem(this.nomeImagemBase + (atacando ? "2" : ""));
         System.out.println("Aldeão atacando!");
