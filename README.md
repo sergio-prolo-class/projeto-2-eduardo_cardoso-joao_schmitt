@@ -13,7 +13,7 @@ conceitos fundamentais de Orientação a Objetos, como herança e polimorfismo, 
 com interface gráfica em Java (Swing).
 
 O desenvolvimento segue uma **Metodologia Gamificada**, onde funcionalidades são desbloqueadas através de uma "Árvore de
-Requisitos" disponibilizada pelo professor, permitindo escolhas de design e implementação de funcionalidades.
+Requisitos", permitindo autonomia nas escolhas de design e implementação.
 
 ## 🎯 Objetivos
 
@@ -24,83 +24,91 @@ Requisitos" disponibilizada pelo professor, permitindo escolhas de design e impl
 
 ---
 
-## ✅ Funcionalidades Implementadas (Pontuação atingida: 48 pontos)
+## ✅ Funcionalidades Implementadas (Pontuação Total: 48 pontos)
 
-Abaixo estão listados os requisitos da Árvore de Habilidades que já foram concluídos no projeto:
+O projeto atingiu a meta de aprovação (32 pontos) implementando as seguintes funcionalidades da Árvore de Requisitos:
 
 ### 🏗️ Base do Projeto (Requisito Obrigatório)
 
-- [x] **Hierarquia de Classes:** Criação da classe abstrata `Personagem` e suas subclasses (`Aldeao`, `Arqueiro`,
-  `Cavaleiro`).
-- [x] **Interfaces:** Implementação de `Guerreiro`, `Coletador` e `ComMontaria`.
-- [x] **Controles Básicos:** Botões para criar personagens de cada tipo.
+- [x] **Hierarquia de Classes:** Criação da classe abstrata `Personagem` para encapsular atributos comuns (vida, posição) e suas subclasses concretas (`Aldeao`, `Arqueiro`, `Cavaleiro`).
+- [x] **Interfaces:** Uso de interfaces para definir capacidades: `Guerreiro` (atacar), `Coletador` (trabalhar) e `ComMontaria` (mobilidade).
+- [x] **Controles Básicos:** Botões para criação dinâmica de personagens.
 
 ### ⚔️ Sistema de Combate
 
 - [x] **Ataque Básico (3 pontos):**
-  - Personagens guerreiros podem atacar.
-  - Animação de troca de sprites (modo ataque).
-  - Dano calculado e subtraído da vida do alvo.
+  - Lógica de combate onde guerreiros causam dano ao alvo.
+  - Troca de sprite para feedback visual da ação de ataque.
 
 - [x] **Sistema de Morte (3 pontos):**
-  - Remoção lógica e visual de personagens com vida <= 0.
-  - Efeito de *fade-out* (transparência gradual) antes de sumir.
-  - Contador de baixas por tipo de unidade.
+  - Remoção lógica do personagem da lista de renderização quando vida <= 0.
+  - Feedback visual (efeito de *fade-out*) e sonoro ao morrer.
+  - Contabilização de baixas no placar.
 
 - [x] **Alcance Variável (4 pontos):**
-  - Definição de raios de ataque distintos por classe (Aldeão: 30px, Cavaleiro: 50px, Arqueiro: 150px).
-  - Cálculo de distância preciso entre personagens.
-  - Validação de alcance antes de aplicar dano.
-  - **Indicador Visual:** Círculo exibido ao atacar.
+  - Implementação de raios de ataque distintos: Aldeão (30px), Cavaleiro (50px) e Arqueiro (150px).
+  - Validação matemática de distância antes de permitir o ataque.
+  - Indicador visual do raio de alcance durante a ação.
 
-- [x] **Esquiva (5 pontos) - NOVO:**
-  - Chance de ignorar completamente o dano recebido.
-  - Probabilidades: Aldeão (10%), Cavaleiro (15%), Arqueiro (25%).
-  - **Feedback Visual:** Texto flutuante "ESQUIVOU!" aparece sobre o personagem.
+- [x] **Esquiva (5 pontos):**
+  - Mecânica probabilística para ignorar dano recebido.
+  - Balanceamento: Aldeão (10%), Cavaleiro (15%), Arqueiro (25%).
+  - Feedback visual flutuante ("ESQUIVOU!").
 
 ### 🎮 Interface e Controles
 
 - [x] **Filtro por Tipo (4 pontos):**
-  - Seleção de unidades via Radio Buttons ou tecla `TAB`.
-  - Comandos afetam apenas o grupo selecionado ("Todos", "Aldeão", etc.).
+  - Sistema de seleção de unidades (Radio Buttons/TAB) para comandos em grupo.
+  - Permite controlar apenas arqueiros, apenas cavaleiros ou todos simultaneamente.
 
 - [x] **Controle de Montaria (5 pontos):**
-  - Cavaleiros podem alternar entre montado e desmontado (Tecla `M`).
-  - Mudança de velocidade (4x mais rápido montado) e sprite.
+  - Mecânica exclusiva para Cavaleiros (Tecla `M`).
+  - Alternância de estados (Montado/Desmontado) afetando velocidade (4x) e sprite.
 
 - [x] **Atalhos de Teclado (6 pontos):**
-  - `WASD` / Setas: Movimentação.
-  - `1`, `2`, `3`: Criar unidades.
-  - `Espaço`: Atacar.
-  - `TAB`: Alterar filtros de tipo.
+  - Mapeamento completo de ações (`WASD` mover, `1-3` criar, `Espaço` atacar, `TAB` filtrar).
+  - Implementação via `InputMap` e `ActionMap` para melhor responsividade.
 
 - [x] **Barra de Vida (4 pontos):**
-  - Barras dinâmicas sobre cada personagem (Verde > Amarelo > Vermelho).
+  - Renderização gráfica da saúde sobre cada unidade.
+  - Mudança dinâmica de cor (Verde -> Amarelo -> Vermelho).
 
-### 🏛️ Arquitetura de Software
+- [x] **Efeitos Sonoros (5 pontos):**
+  - Feedback auditivo para ações de ataque (diferente por classe), dano e morte.
+  - Gerenciamento de áudio para evitar sobreposição excessiva.
+
+### 🏛️ Decisões de Design e Arquitetura
+
+Esta seção detalha as escolhas técnicas feitas para garantir um código modular e manutenível:
 
 - [x] **Arquivo de Configurações (3 pontos):**
-  - Centralização de constantes (vida, ataque, chances de esquiva) na classe `Config`.
+  - **Decisão:** Centralizar todas as constantes de balanceamento (vida, dano, velocidade, chances) na classe estática `Config`.
+  - **Benefício:** Facilita ajustes de gameplay sem necessidade de alterar a lógica das classes de domínio.
 
-- [x] **Fábrica de Personagens (6 pontos):**
-  - Implementação do padrão de projeto **Factory** para centralizar a criação de unidades.
-  - **Enumeração Segura**: Uso de `TipoPersonagem` para evitar strings mágicas.
-  - **Switch Expression**: Instanciação moderna e concisa usando a nova sintaxe do Java.
-  - **Refatoração da UI**: Código limpo no painel de controles, eliminando duplicação lógica.
+- [x] **Fábrica de Personagens - Factory Pattern (6 pontos):**
+  - **Decisão:** Implementar o padrão de projeto *Factory Method* (`PersonagemFactory`) com o uso de *Java Switch Expressions*.
+  - **Benefício:** Desacopla a interface gráfica (`PainelControles`) da lógica de instanciação das classes, eliminando código duplicado e facilitando a adição de novos tipos de unidades no futuro.
 
-- [x] **Tratamento de Erros:** Sistema robusto de carregamento de imagens (previne fechamento do jogo se faltar sprite).
+- [x] **Tratamento de Erros:**
+  - Implementação robusta no carregamento de recursos (sprites e áudio), evitando falhas fatais (`crash`) caso um arquivo esteja ausente.
 
 ---
 
-## 🚀 Como Executar o programa
+## 🚀 Como Executar o Projeto
 
 ### Pré-requisitos
 - Java JDK 17 ou superior.
-- Gradle.
+- Gradle (incluso via wrapper).
 
 ### Passos
 1. Clone o repositório.
-2. Abra o terminal na pasta do projeto.
-3. Execute:
-   ```bash
-   ./gradlew run
+2. Abra o terminal na pasta raiz do projeto.
+3. Execute o comando para compilar e rodar:
+  * **Windows:**
+    ```cmd
+    gradlew.bat run
+    ```
+  * **Linux/Mac:**
+    ```bash
+    ./gradlew run
+    ```
